@@ -17,6 +17,7 @@ var observer = new MutationObserver(function(mutations) {
  
 // Notify me of everything!
 var observerConfig = {
+    subtree: true,    
 	attributes: true, 
 	childList: true, 
 	characterData: true 
