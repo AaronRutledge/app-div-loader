@@ -8,21 +8,31 @@ import { arrive, leave } from 'arrive';
 let MutationObserver = require('mutation-observer');
 
 
-var observer = new MutationObserver(function(mutations) {
-	// For the sake of...observation...let's output the mutation to console to see how this all works
-	mutations.forEach(function(mutation) {
-		console.log("mutation observeeer "+ mutation.type);
-	});    
+var observer = new MutationObserver(function (mutations) {
+    // For the sake of...observation...let's output the mutation to console to see how this all works
+    mutations.forEach(function (mutation) {
+        let elementAdd = mutation.addedNodes;
+        let elementRemoved = mutation.removedNodes;
+        let appName;
+        if (elementAdd.nodeType > 0 && elementAdd.length > 0) {
+            appName = elementAdd[0].getAttribute("id");
+            console.log("Added! app mutated is " + appName);
+        }
+        if (elementAdd.nodeType > 0 && elementRemoved.length > 0) {
+            appName = elementRemoved[0].getAttribute("id");
+            console.log("Removed! app mutated is " + appName);
+        }
+
+    });
 });
- 
+
 // Notify me of everything!
 var observerConfig = {
-    subtree: true,    
-	attributes: true, 
-	childList: true, 
-	characterData: true 
+    subtree: true,
+    attributes: true,
+    childList: true,
 };
- 
+
 // Node, config
 // In this case we'll listen to all changes to body and child nodes
 var targetNode = document.body;
